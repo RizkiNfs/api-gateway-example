@@ -1,0 +1,24 @@
+{
+  "name": "api-gateway-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RizkiNfs/api-gateway-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RizkiNfs/api-gateway-example/issues"
+  },
+  "homepage": "https://github.com/RizkiNfs/api-gateway-example#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "fastify": "^2.3.0",
+    "k-fastify-gateway": "^2.5.1"
+  }
+}
