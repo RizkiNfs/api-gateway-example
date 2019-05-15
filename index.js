@@ -2,7 +2,9 @@ const fastify = require('fastify')({})
 
 // required plugin for HTTP requests proxy
 fastify.register(require('fastify-reply-from'))
-
+fastify.register(require('fastify-jwt'), {
+  secret: 'supersecret'
+})
 // gateway plugin
 fastify.register(require('k-fastify-gateway'), {
   middlewares: [
@@ -15,7 +17,15 @@ fastify.register(require('k-fastify-gateway'), {
       prefixRewrite: '',
       target: 'http://localhost:4001',
       middlewares: [],
-      hooks: {}
+      hooks: {
+        onRequest: async (request, reply) => {
+          try {
+            await request.jwtVerify()
+          } catch (err) {
+            reply.send(err)
+          }
+        },
+      }
     },
     {
       prefix: '/service2',
@@ -36,6 +46,11 @@ fastify.register(require('k-fastify-gateway'), {
 
 fastify.get('/', function (request, reply) {
   reply.send({ message: 'hello from api-gateway' })
+})
+
+fastify.get('/token', function (request, reply) {
+  const token = fastify.jwt.sign({ 'user': 'user123' })
+  reply.send({ token })
 })
 
 // start the gateway HTTP server
